@@ -1,0 +1,8 @@
+backend:
+  image: computer-parts-store/backend:latest
+frontend:
+  image: computer-parts-store/frontend:latest
+postgres:
+  image: postgres:16
+keycloak:
+  image: quay.io/keycloak/keycloak:25.0
