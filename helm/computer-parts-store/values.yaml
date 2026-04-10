@@ -1,0 +1,8 @@
+backend:
+  image: computer-parts-backend:latest
+frontend:
+  image: computer-parts-frontend:latest
+postgres:
+  username: store
+  password: store
+  database: store

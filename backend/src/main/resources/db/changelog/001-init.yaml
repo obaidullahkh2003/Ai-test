@@ -1,0 +1,63 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001
+      author: codex
+      changes:
+        - createTable:
+            tableName: categories
+            columns:
+              - column: {name: id, type: BIGSERIAL, constraints: {primaryKey: true}}
+              - column: {name: name, type: VARCHAR(255), constraints: {nullable: false, unique: true}}
+        - createTable:
+            tableName: products
+            columns:
+              - column: {name: id, type: BIGSERIAL, constraints: {primaryKey: true}}
+              - column: {name: name, type: VARCHAR(255), constraints: {nullable: false}}
+              - column: {name: price, type: NUMERIC(12,2), constraints: {nullable: false}}
+              - column: {name: stock, type: INT}
+              - column: {name: category_id, type: BIGINT, constraints: {nullable: false}}
+        - addForeignKeyConstraint:
+            baseTableName: products
+            baseColumnNames: category_id
+            referencedTableName: categories
+            referencedColumnNames: id
+            constraintName: fk_products_category
+        - createTable:
+            tableName: orders
+            columns:
+              - column: {name: id, type: BIGSERIAL, constraints: {primaryKey: true}}
+              - column: {name: customer_id, type: VARCHAR(255)}
+              - column: {name: created_at, type: TIMESTAMP WITH TIME ZONE}
+        - createTable:
+            tableName: order_items
+            columns:
+              - column: {name: id, type: BIGSERIAL, constraints: {primaryKey: true}}
+              - column: {name: order_id, type: BIGINT, constraints: {nullable: false}}
+              - column: {name: product_id, type: BIGINT, constraints: {nullable: false}}
+              - column: {name: quantity, type: INT}
+              - column: {name: unit_price, type: NUMERIC(12,2)}
+        - addForeignKeyConstraint:
+            baseTableName: order_items
+            baseColumnNames: order_id
+            referencedTableName: orders
+            referencedColumnNames: id
+            constraintName: fk_order_items_order
+        - addForeignKeyConstraint:
+            baseTableName: order_items
+            baseColumnNames: product_id
+            referencedTableName: products
+            referencedColumnNames: id
+            constraintName: fk_order_items_product
+        - createTable:
+            tableName: cart_items
+            columns:
+              - column: {name: id, type: BIGSERIAL, constraints: {primaryKey: true}}
+              - column: {name: customer_id, type: VARCHAR(255)}
+              - column: {name: product_id, type: BIGINT, constraints: {nullable: false}}
+              - column: {name: quantity, type: INT}
+        - addForeignKeyConstraint:
+            baseTableName: cart_items
+            baseColumnNames: product_id
+            referencedTableName: products
+            referencedColumnNames: id
+            constraintName: fk_cart_items_product
