@@ -1,0 +1,12 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata: {name: cps-ingress}
+spec:
+  rules:
+    - host: computer-parts.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service: {name: cps-frontend, port: {number: 80}}

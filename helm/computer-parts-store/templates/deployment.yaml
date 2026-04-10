@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: cps-backend}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: cps-backend}}
+  template:
+    metadata: {labels: {app: cps-backend}}
+    spec:
+      containers:
+        - name: backend
+          image: "{{ .Values.image.backend }}"
+          env:
+            - {name: SPRING_DATASOURCE_URL, value: "{{ .Values.postgres.url }}"}
+            - {name: SPRING_DATASOURCE_USERNAME, value: "{{ .Values.postgres.username }}"}
+            - {name: SPRING_DATASOURCE_PASSWORD, value: "{{ .Values.postgres.password }}"}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: cps-frontend}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: cps-frontend}}
+  template:
+    metadata: {labels: {app: cps-frontend}}
+    spec:
+      containers:
+        - name: frontend
+          image: "{{ .Values.image.frontend }}"

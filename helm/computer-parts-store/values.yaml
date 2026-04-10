@@ -1,0 +1,7 @@
+image:
+  backend: computer-parts-store-backend:latest
+  frontend: computer-parts-store-frontend:latest
+postgres:
+  url: jdbc:postgresql://postgres:5432/storedb
+  username: store
+  password: store
