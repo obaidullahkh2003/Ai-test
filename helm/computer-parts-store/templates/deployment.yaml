@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: parts-backend }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: parts-backend } }
+  template:
+    metadata: { labels: { app: parts-backend } }
+    spec:
+      containers:
+        - name: backend
+          image: {{ .Values.image.backend }}
+          envFrom: [{configMapRef: {name: parts-config}}, {secretRef: {name: parts-secret}}]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: parts-frontend }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: parts-frontend } }
+  template:
+    metadata: { labels: { app: parts-frontend } }
+    spec:
+      containers:
+        - name: frontend
+          image: {{ .Values.image.frontend }}
