@@ -1,0 +1,4 @@
+backend:
+  image: computer-parts-store-backend:latest
+frontend:
+  image: computer-parts-store-frontend:latest

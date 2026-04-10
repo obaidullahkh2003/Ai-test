@@ -1,0 +1,31 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: parts_store
+      POSTGRES_USER: store
+      POSTGRES_PASSWORD: store
+    ports: ["5432:5432"]
+  keycloak:
+    image: quay.io/keycloak/keycloak:25.0
+    command: ["start-dev", "--import-realm"]
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    volumes:
+      - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json
+    ports: ["8081:8080"]
+  backend:
+    build: ./backend
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/parts_store
+      DB_USER: store
+      DB_PASSWORD: store
+      KEYCLOAK_ISSUER: http://keycloak:8080/realms/parts-store
+    depends_on: [postgres, keycloak]
+    ports: ["8080:8080"]
+  frontend:
+    build: ./frontend
+    depends_on: [backend]
+    ports: ["4200:80"]
