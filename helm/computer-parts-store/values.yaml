@@ -1,0 +1,4 @@
+image:
+  backend: your-registry/parts-backend:latest
+  frontend: your-registry/parts-frontend:latest
+host: parts.local

@@ -1,0 +1,6 @@
+{
+  "realm": "parts-store",
+  "enabled": true,
+  "roles": {"realm": [{"name": "ADMIN"}, {"name": "CUSTOMER"}]},
+  "clients": [{"clientId": "parts-ui", "publicClient": true, "redirectUris": ["*"]}]
+}
